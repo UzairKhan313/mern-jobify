@@ -12,7 +12,9 @@ import {
   Admin,
   Stats,
 } from "./pages";
+import { action as registerAction } from "./pages/Register";
 
+// Checking default them in local storage.
 const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("jobify-dark-theme") === "true";
   document.body.classList.toggle("dark-theme", isDarkTheme);
@@ -34,6 +36,7 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+        action: registerAction,
       },
       {
         path: "login",
