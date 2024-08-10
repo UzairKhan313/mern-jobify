@@ -1,11 +1,12 @@
 import express from "express";
 import {
+  createJob,
   deleteJob,
   getAllJobs,
   getJob,
   updateJob,
-} from "../controller/JobController";
-import { validateJobInput } from "../middleware/validationMiddleware";
+} from "../controller/JobController.js";
+import { validateJobInput } from "../middleware/validationMiddleware.js";
 
 const router = express.Router();
 

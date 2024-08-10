@@ -1,4 +1,4 @@
-import { UnauthenticatedError } from "../customErrors.js";
+import { UnauthenticatedError } from "../errors/CustomError.js";
 import { verifyJWT } from "../utils/tokenUtils.js";
 
 export const authenticateUser = async (req, res, next) => {

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { JOB_STATUS, JOB_TYPE } from "../utils/constant";
+import { JOB_STATUS, JOB_TYPE } from "../utils/constant.js";
 
 const JobSchema = new mongoose.Schema(
   {
@@ -26,11 +26,5 @@ const JobSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-UserSchema.methods.toJSON = function () {
-  var obj = this.toObject();
-  delete obj.password;
-  return obj;
-};
 
 export default mongoose.model("Job", JobSchema);

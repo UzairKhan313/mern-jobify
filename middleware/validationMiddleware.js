@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import { body, validationResult, param } from "express-validator";
-import { BadRequestError } from "../errors/customErrors";
-import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
+
+import { BadRequestError } from "../errors/CustomError.js";
+import { JOB_STATUS, JOB_TYPE } from "../utils/constant.js";
+
 import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
 
