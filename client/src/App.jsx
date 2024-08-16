@@ -12,7 +12,11 @@ import {
   Admin,
   Stats,
 } from "./pages";
+
+// Importing Actions and loader
 import { action as registerAction } from "./pages/Register";
+import { action as loginAction } from "./pages/Login";
+import { loader as dashboardLoader } from "./pages/DashboardLayout";
 
 // Checking default them in local storage.
 const checkDefaultTheme = () => {
@@ -41,10 +45,12 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+        action: loginAction,
       },
       {
         path: "dashboard",
         element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,

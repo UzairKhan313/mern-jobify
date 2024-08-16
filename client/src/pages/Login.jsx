@@ -1,13 +1,21 @@
-import { Link, useNavigation, useActionData } from "react-router-dom";
+import {
+  Form,
+  Link,
+  useNavigation,
+  useActionData,
+  redirect,
+} from "react-router-dom";
 
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
+import { toast } from "react-toastify";
+import customFetch from "../utils/customFetch";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const errors = { msg: "" };
-  if (data.password.length < 3) {
+  if (data.password.length < 4) {
     errors.msg = "password too short";
     return errors;
   }
@@ -16,8 +24,8 @@ export const action = async ({ request }) => {
     toast.success("Login successful");
     return redirect("/dashboard");
   } catch (error) {
-    // toast.error(error?.response?.data?.msg);
-    errors.msg = error.response.data.msg;
+    toast.error(error?.response?.data?.msg);
+    errors.msg = error?.response?.data?.msg;
     return errors;
   }
 };
@@ -28,10 +36,10 @@ const Login = () => {
   const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
-      <form method="post" className="form">
+      <Form method="post" className="form">
         <Logo />
         <h4>Login</h4>
-
+        {errors?.msg && <p style={{ color: "red" }}>{errors.msg}</p>}
         <FormRow
           type="email"
           name="email"
@@ -56,8 +64,7 @@ const Login = () => {
             Register
           </Link>
         </p>
-        {errors && <p style={{ color: "red" }}>{errors.msg}</p>}
-      </form>
+      </Form>
     </Wrapper>
   );
 };

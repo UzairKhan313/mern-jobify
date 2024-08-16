@@ -1,6 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../models/UserModel.js";
-import { hashPassword } from "../utils/PasswordUtility.js";
+import { comparePassword, hashPassword } from "../utils/PasswordUtility.js";
+import { UnauthenticatedError } from "../errors/CustomError.js";
+import { createJWT } from "../utils/tokenUtils.js";
 
 export const register = async (req, res) => {
   const isFirstAccount = (await User.countDocuments()) === 0;
@@ -24,6 +26,9 @@ export const login = async (req, res) => {
   // one day 24 hr.
   const oneDay = 1000 * 60 * 60 * 24;
 
+  // Generating token
+  const token = createJWT({ userId: user._id, role: user.role });
+
   res.cookie("token", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
@@ -31,7 +36,6 @@ export const login = async (req, res) => {
   });
 
   res.status(StatusCodes.CREATED).json({ msg: "user logged in" });
-  res.send("register");
 };
 
 export const logout = (req, res) => {
