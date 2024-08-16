@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes";
 import User from "../models/UserModel.js";
 import { hashPassword } from "../utils/PasswordUtility.js";
 
