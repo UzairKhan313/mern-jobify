@@ -8,6 +8,7 @@ import {
   getApplicationStats,
   updateUser,
 } from "../controller/UserController.js";
+import { validateUpdateUserInput } from "../middleware/validationMiddleware.js";
 
 router.get("/current-user", getCurrentUser);
 router.get(
@@ -15,6 +16,6 @@ router.get(
   authorizePermissions("admin"),
   getApplicationStats
 );
-router.patch("/update-user", updateUser);
+router.patch("/update-user", validateUpdateUserInput, updateUser);
 
 export default router;

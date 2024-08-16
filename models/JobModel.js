@@ -8,12 +8,12 @@ const JobSchema = new mongoose.Schema(
     jobStatus: {
       type: String,
       enum: Object.values(JOB_STATUS),
-      default: "pending",
+      default: JOB_STATUS.PENDING,
     },
     jobType: {
       type: String,
       enum: Object.values(JOB_TYPE),
-      default: "full-time",
+      default: JOB_TYPE.FULL_TIME,
     },
     jobLocation: {
       type: String,

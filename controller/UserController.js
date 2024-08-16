@@ -9,7 +9,11 @@ export const getCurrentUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const updatedUser = await User.findByIdAndUpdate(req.user.userId, req.body);
+  // Removing Password form the req body
+  const obj = { ...req.body };
+  delete obj.password;
+
+  const updatedUser = await User.findByIdAndUpdate(req.user.userId, obj);
   res.status(StatusCodes.OK).json({ msg: "user updated" });
 };
 

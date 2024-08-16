@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { body, validationResult, param } from "express-validator";
 
-import { BadRequestError } from "../errors/CustomError.js";
+import { BadRequestError, UnauthorizedError } from "../errors/CustomError.js";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constant.js";
 
 import Job from "../models/JobModel.js";
@@ -40,11 +40,15 @@ export const validateJobInput = withValidationErrors([
 
 // Validating parameter comming in request
 export const validateIdParam = withValidationErrors([
-  param("id").custom(async (value) => {
+  param("id").custom(async (value, { req }) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) throw new BadRequestError("invalid MongoDB id");
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`no job with id : ${value}`);
+    const isAdmin = req.user.role === "admin";
+    const isOwner = job.createdBy.toString() === req.user.userId;
+    if (!isAdmin && !isOwner)
+      throw new UnauthorizedError("Not authorized to access the route.");
   }),
 ]);
 
@@ -82,7 +86,7 @@ export const validateLoginInput = withValidationErrors([
 ]);
 
 // Validating updating user inputs comming in request
-const validateUpdateUserInput = withValidationErrors([
+export const validateUpdateUserInput = withValidationErrors([
   body("name").notEmpty().withMessage("name is required"),
   body("email")
     .notEmpty()
@@ -92,7 +96,7 @@ const validateUpdateUserInput = withValidationErrors([
     .custom(async (email, { req }) => {
       const user = await User.findOne({ email });
       if (user && user._id.toString() !== req.user.userId) {
-        throw new Error("email already exists");
+        throw new BadRequestError("email already exists");
       }
     }),
   body("lastName").notEmpty().withMessage("last name is required"),

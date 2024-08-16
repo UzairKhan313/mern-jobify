@@ -36,6 +36,11 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/job", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 
+// Not found Routes Error.
+app.use("*", (req, res) => {
+  res.status(404).json({ msg: "not found" });
+});
+
 //Error Handler Middlewar.
 app.use(errorHandlerMiddleware);
 
