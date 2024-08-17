@@ -16,7 +16,7 @@ import userRouter from "./routes/userRoutes.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5100;
 
 // For parsing json data.
 app.use(express.json());
@@ -28,12 +28,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.get("/api/v1/test", (req, res) => {
-  res.json({ msg: "test route" });
-});
-
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/job", authenticateUser, jobRouter);
+app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 
 // Not found Routes Error.

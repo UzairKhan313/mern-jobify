@@ -22,6 +22,7 @@ const withValidationErrors = (validateValues) => {
         }
         throw new BadRequestError(errorMessages);
       }
+
       next();
     },
   ];
