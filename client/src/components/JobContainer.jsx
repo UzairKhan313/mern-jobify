@@ -7,7 +7,7 @@ const JobContainer = () => {
   const { data } = useAllJobsContext();
   const { jobs } = data;
 
-  if (jobs.lenght === 0) {
+  if (jobs.length === 0) {
     return (
       <Wrapper>
         <h2>No Jobs to display....</h2>

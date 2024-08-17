@@ -4,6 +4,11 @@ import morgan from "morgan";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cloudinary from "cloudinary";
+
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
 
 import { authenticateUser } from "./middleware/authMiddleware.js";
 import errorHandlerMiddleware from "./middleware/ErrorHandler.js";
@@ -15,18 +20,30 @@ import userRouter from "./routes/userRoutes.js";
 // Setting path to the dotenv file.
 dotenv.config();
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
 const app = express();
 const port = process.env.PORT || 5100;
+
+//Setting up the root path.
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// For diplay the route and request information..
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+// Serving file statically.
+app.use(express.static(path.resolve(__dirname, "./public")));
 
 // For parsing json data.
 app.use(express.json());
 // Cookie parser.
 app.use(cookieParser());
-
-// Fon environment varaible.
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
