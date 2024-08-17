@@ -6,3 +6,4 @@ export { default as SmallSidebar } from "./SmallSidebar";
 export { default as FormRowSelect } from "./FormRowSelect";
 export { default as SearchContainer } from "./SearchContainer";
 export { default as JobContainer } from "./JobContainer";
+export { default as StatItem } from "./StateItem";
