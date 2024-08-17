@@ -7,14 +7,18 @@ import {
   updateJob,
 } from "../controller/JobController.js";
 import { validateJobInput } from "../middleware/validationMiddleware.js";
+import { checkForTestUser } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/").get(getAllJobs).post(validateJobInput, createJob);
+router
+  .route("/")
+  .get(getAllJobs)
+  .post(checkForTestUser, validateJobInput, createJob);
 router
   .route("/:id")
   .get(getJob)
-  .patch(validateJobInput, updateJob)
-  .delete(deleteJob);
+  .patch(checkForTestUser, validateJobInput, updateJob)
+  .delete(checkForTestUser, deleteJob);
 
 export default router;

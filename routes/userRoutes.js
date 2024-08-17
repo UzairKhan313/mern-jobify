@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { authorizePermissions } from "../middleware/authMiddleware.js";
+import {
+  authorizePermissions,
+  checkForTestUser,
+} from "../middleware/authMiddleware.js";
 
 const router = Router();
 
@@ -19,6 +22,7 @@ router.get(
 );
 router.patch(
   "/update-user",
+  checkForTestUser,
   upload.single("avatar"),
   validateUpdateUserInput,
   updateUser
