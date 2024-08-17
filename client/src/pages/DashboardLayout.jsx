@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 export const loader = async () => {
   try {
     const { data } = await customFetch.get("/users/current-user");
+
     return data;
   } catch (error) {
     return redirect("/");
@@ -28,6 +29,7 @@ const DashboardLayout = ({ isDarkThemeEnabled }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
   const { user } = useLoaderData();
+
   const naivgate = useNavigate();
 
   const toggleDarkTheme = () => {
