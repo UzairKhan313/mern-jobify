@@ -8,3 +8,7 @@ export { default as SearchContainer } from "./SearchContainer";
 export { default as JobContainer } from "./JobContainer";
 export { default as StatItem } from "./StateItem";
 export { default as SubmitBtn } from "./SubmitButton";
+export { default as AreaChart } from "./AreaChart";
+export { default as BarChart } from "./BarChart";
+export { default as StatsContainer } from "./StatsContainer";
+export { default as ChartsContainer } from "./ChartsContainer";

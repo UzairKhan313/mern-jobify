@@ -1,10 +1,4 @@
-import {
-  Form,
-  Link,
-  useNavigate,
-  redirect,
-  useNavigation,
-} from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo, SubmitBtn } from "../components";
@@ -19,7 +13,6 @@ export const action = async ({ request }) => {
     toast.success("Registration successful");
     return redirect("/login");
   } catch (error) {
-    console.log(error?.response?.data?.msg);
     toast.error(error?.response?.data?.msg);
 
     return error;
