@@ -19,7 +19,7 @@ Jobify is a full-featured job management platform built using the MERN stack and
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
 - **State Management**: React Query
-- **Styling**: CSS, Tailwind CSS
+- **Styling**: CSS, Styled Component
 
 ## Getting Started
 
