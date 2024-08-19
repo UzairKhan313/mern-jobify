@@ -5,6 +5,8 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -44,6 +46,9 @@ app.use(express.static(path.resolve(__dirname, "./public")));
 app.use(express.json());
 // Cookie parser.
 app.use(cookieParser());
+
+app.use(helmet());
+app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobRouter);

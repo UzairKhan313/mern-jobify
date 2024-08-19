@@ -7,7 +7,10 @@ import {
   showStats,
   updateJob,
 } from "../controller/JobController.js";
-import { validateJobInput } from "../middleware/validationMiddleware.js";
+import {
+  validateIdParam,
+  validateJobInput,
+} from "../middleware/validationMiddleware.js";
 import { checkForTestUser } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -20,7 +23,7 @@ router
 router.route("/stats").get(showStats);
 router
   .route("/:id")
-  .get(getJob)
+  .get(validateIdParam, getJob)
   .patch(checkForTestUser, validateJobInput, updateJob)
   .delete(checkForTestUser, deleteJob);
 
