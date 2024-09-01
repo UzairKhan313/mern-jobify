@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Serving file statically.
-app.use(express.static(path.resolve(__dirname, "./public")));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 
 // For parsing json data.
 app.use(express.json());
@@ -53,6 +53,11 @@ app.use(mongoSanitize());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
+
+// for deployment.
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
+});
 
 // Not found Routes Error.
 app.use("*", (req, res) => {
